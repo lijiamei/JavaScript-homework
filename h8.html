@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        body {
+            padding: 50px;
+        }
+        
+        li {
+            list-style: none;
+        }
+        
+        div {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        ul.image {
+            position: relative;
+        }
+        
+        li img {
+            width: 600px;
+            height: 400px;
+        }
+        
+        ul.image li {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+        }
+        
+        ul.image li.opa {
+            opacity: 1;
+        }
+        
+        .pre,
+        .next {
+            position: absolute;
+            top: 45%;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            font-size: 30px;
+            line-height: 1.1em;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(150, 150, 150, 0.6);
+            border-radius: 15%;
+        }
+        
+        .next {
+            right: 0;
+        }
+        
+        .pre:hover {
+            background-color: rgba(100, 100, 100, 0.8);
+        }
+        
+        .next:hover {
+            background-color: rgba(100, 100, 100, 0.8);
+        }
+        
+        .dot {
+            position: absolute;
+            left: 70px;
+            top: 420px;
+        }
+        
+        .dot>li {
+            float: left;
+            width: 10px;
+            height: 10px;
+            background: rgba(130, 130, 130, 0.8);
+            cursor: pointer;
+            margin: 0 5px;
+            border-radius: 50%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <ul id="image" class="image">
+            <li><img src="images/01.jpg" alt="01" /></li>
+            <li><img src="images/02.jpg" alt="02" /></li>
+            <li><img src="images/03.jpg" alt="03" /></li>
+            <li><img src="images/04.jpg" alt="04" /></li>
+            <li><img src="images/05.jpg" alt="05" /></li>
+            <li><img src="images/06.jpg" alt="06" /></li>
+            <li><img src="images/07.jpg" alt="07" /></li>
+            <li><img src="images/08.jpg" alt="08" /></li>
+        </ul>
+        <div id="pre" class="pre">
+            < </div>
+                <div id="next" class="next">
+                    >
+                </div>
+        </div>
+
+        <ul class="dot">
+            <li id="lis" class="li1"></li>
+            <li id="lis"></li>
+            <li id="lis"></li>
+            <li id="lis"></li>
+            <li id="lis"></li>
+            <li id="lis"></li>
+            <li id="lis"></li>
+            <li id="lis"></li>
+        </ul>
+
+
+</body>
+<script src="jquery.js"></script>
+<script>
+    //初始化
+    var index = 0;
+    var t;
+    var length = 8;
+    $(".li1").css("background", "white");
+    $(".li1").css("border", "3px solid rgba(130, 130, 130, 0.8)");
+    $(" .li1").css("margin-top", "-3px");
+    $('#image li').eq(index).addClass('opa');
+
+    function move(index) {
+        $(".dot li").css("background", "rgba(130, 130, 130, 0.8)");
+        $(".dot li").css("border", "0px");
+        $(".dot li").css("margin-top", "0px");
+        $(".dot li").eq(index).css("background", "white");
+        $(".dot li").eq(index).css("border", "3px solid rgba(130, 130, 130, 0.8)");
+        $(".dot li").eq(index).css("margin-top", "-3px");
+    }
+
+    var time = setInterval(autoMove, 3000);
+
+    function autoMove() {
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+        move(index);
+    }
+
+    function changeTo(index) {
+        $('#image li').eq(index).addClass('opa').siblings().removeClass('opa');
+    }
+
+    $('#pre').click(function() {
+        index--;
+        if (index < 0) index = length - 1;
+        changeTo(index);
+        move(index);
+    });
+
+    $('#next').click(function() {
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+        move(index);
+    });
+
+    $('.dot li').click(function() {
+        index = $(this).index();
+        changeTo(index);
+        move(index);
+    });
+</script>
+
+</html>
